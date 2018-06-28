@@ -1,33 +1,49 @@
 <template>
   <section class="container">
     <div>
-      <app-logo/>
+      <!-- <app-logo/> -->
       <h1 class="title">
-        my-project-nuxt
+        my-project-nuxt {{authUser}}
       </h1>
-      <h2 class="subtitle">
-        Nuxt.js project
-      </h2>
+      <button @click="increment">{{ counter }}</button><br>
+
+      <button @click="setuser">setuser</button><br>
+
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
+        <p><nuxt-link to="/user">user</nuxt-link></p>
+        <p><nuxt-link to="/user/one">one</nuxt-link></p>
+        <p><nuxt-link to="/user/100">user/100</nuxt-link></p>
+        <p><nuxt-link to="/user1111">errorlink</nuxt-link></p>
       </div>
+
     </div>
   </section>
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+
 import AppLogo from '~/components/AppLogo.vue'
 
 export default {
+  fetch({ store }) {
+    store.commit('increment')
+  },
   components: {
     AppLogo
+  },
+  computed: mapState([
+    'counter',
+    'authUser'
+  ]),
+  methods: {
+    increment() {
+      this.$store.commit('increment')
+    },
+    setuser(){
+      this.$store.commit('setuser',{name:'wzw'});
+    }
   }
 }
 </script>
@@ -45,7 +61,7 @@ export default {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 50px;
   color: #35495e;
   letter-spacing: 1px;
 }
@@ -60,5 +76,6 @@ export default {
 
 .links {
   padding-top: 15px;
+  font-size: 32px;
 }
 </style>
